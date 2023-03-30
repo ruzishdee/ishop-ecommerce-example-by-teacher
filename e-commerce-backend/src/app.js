@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv"
 import menuApi from "./routes/menu-api";
 import adminApi from "./routes/admin-api";
+import authApi from "./routes/auth-api";
 
 dotenv.config()
 
@@ -17,8 +18,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/menu", menuApi);
 app.use("/admin", adminApi);
+app.use("/auth", authApi);
 app.get('/', (req, res) => {
-  res.send('<h1>Day - 88</h1>')
+  res.send('<h1 style="text-align: center; background-color : purple">Day - 88</h1>')
 })
 
 app.listen(PORT, () => {

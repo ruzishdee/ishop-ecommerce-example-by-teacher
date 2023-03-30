@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { LoginContext } from "../context/login-provider";
 
 export default function SearchBar(props) {
   const [showWish, setShowWish] = useState(false);
   const [showBasket, setShowBasket] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+
+  const { login, setLogin } = useContext(LoginContext)
+
+  const signOut = () => {
+    localStorage.removeItem("token")
+    setLogin(true)
+  }
+  useEffect(() => {
+    console.log(login)
+  }, [login])
   const notifyBasketRemove = (title) =>
     toast.error(title + "-г сагснаас амжилттай устгалаа.! ", {
       icon: <i class="bi bi-trash3"></i>,
@@ -31,11 +42,11 @@ export default function SearchBar(props) {
     notifyBasketRemove(title);
   }
 
-  console.log("Wishlist array = ");
-  console.log(props.wishlist);
+  // console.log("Wishlist array = ");
+  // console.log(props.wishlist);
 
-  console.log("Basket array = ");
-  console.log(props.basket);
+  // console.log("Basket array = ");
+  // console.log(props.basket);
 
   function removeFromWishlist(id, title, props) {
     console.log("--------To remove from wishlist ");
@@ -87,7 +98,14 @@ export default function SearchBar(props) {
             <div className="signin">
               <i className="bi bi-person"></i>
               <span className="space"> </span>
-              <Link to={"/signup"}>Sign in</Link>
+
+              <button onClick={signOut}>
+                {login ? "Sign out" : "Sign in"}
+              </button>
+
+              {/* <Link to={"/signup"}>
+                {login ? "Sign out" : "Sign in"}
+              </Link> */}
             </div>
             <div className="favorite">
               <i
